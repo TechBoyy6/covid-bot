@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def about():
-    return "Its a Whatsapp Bot that help get covid resources on whatsapp easily."
+    return "This is a Whatsapp Bot that extracts the leads from the covid.army api and provide covid resources on whatsapp easily.\nThis initiative its taken by Moiz Rajkotwala\nOnline Portfolio -> moizrajkotwala.netlify.app\nGitHub -> https://github.com/TechBoyy6"
 
 @app.route("/msg", methods=['POST'])
 def sms_reply():
