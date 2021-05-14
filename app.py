@@ -21,14 +21,16 @@ def sms_reply():
 
     msg = request.form.get('Body')
     para = msg.lower().split(" ")
+    print(para)
     s = requests.Session()        
 
-      
+        
     if len(para) >= 2:
 
         try:
             
             url="https://api.covid.army/api/tweets/{}/{}".format(para[0], "".join(para[1:]))
+
 
             r = s.get(url)
             output = json.loads(r.text)
@@ -42,13 +44,12 @@ def sms_reply():
             main_msg = MessagingResponse()
             main_msg.message(user_out)
             return str(main_msg)
-        
         except:
             err_msg = MessagingResponse()
             err_msg.message("Nothing Found :(\nTo imporve the search\n Input correct spelling\nTry different location or resource")
             return str(err_msg)
-        
-    elif msg.lower() == "resources" or "resource":
+
+    elif msg.lower() == ("resources"):
 
         link = "https://api.covid.army/api/resources"
         r = s.get(link)
@@ -57,12 +58,12 @@ def sms_reply():
         res_msg = MessagingResponse()
         res_msg.message(gvn)
         return str(res_msg)
-        
+
     else:
         intro = """Hello, Myself 'Covid Resource Bot'\n
                     *Type 'resources' to know the list of resources you can search for.\n
                     *Type 'Location<space>Resource' to get lead message.
-                    example -> mumbai oxygen"""
+                    example - mumbai oxygen"""
         
         intro_msg = MessagingResponse()
         intro_msg.message(intro)
