@@ -12,8 +12,8 @@ app = Flask(__name__)
 def about():
     abt_msg = ('This is a Whatsapp Bot that extracts the leads from the covid.army api and provide covid resources on whatsapp easily.\n'
     'This initiative is taken by Moiz Rajkotwala\n'
-    <a href="http://moizrajkotwala.netlify.app">Online Portfolio</a>
-    <a href="https://github.com/TechBoyy6">GitHub</a>)
+    'Online Portfolio -- http://moizrajkotwala.netlify.app'
+    'GitHub -- https://github.com/TechBoyy6')
     return abt_msg
 
 @app.route("/msg", methods=['POST'])
