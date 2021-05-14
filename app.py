@@ -10,10 +10,10 @@ app = Flask(__name__)
 
 @app.route("/")
 def about():
-    abt_msg = """This is a Whatsapp Bot that extracts the leads from the covid.army api and provide covid resources on whatsapp easily.\n
-    This initiative is taken by Moiz Rajkotwala\n
-    Online Portfolio -> http://moizrajkotwala.netlify.app \n
-    GitHub -> https://github.com/TechBoyy6"""
+    abt_msg = ('This is a Whatsapp Bot that extracts the leads from the covid.army api and provide covid resources on whatsapp easily.\n'
+    'This initiative is taken by Moiz Rajkotwala\n'
+    <a href="http://moizrajkotwala.netlify.app">Online Portfolio</a>
+    <a href="https://github.com/TechBoyy6">GitHub</a>)
     return abt_msg
 
 @app.route("/msg", methods=['POST'])
@@ -23,17 +23,8 @@ def sms_reply():
     para = msg.lower().split(" ")
     s = requests.Session()        
 
-    if msg.lower() == "resources" or "resource":
-
-        link = "https://api.covid.army/api/resources"
-        r = s.get(link)
-        res_output = json.loads(r.text)
-        gvn = '\n'.join(res_output)
-        res_msg = MessagingResponse()
-        res_msg.message(gvn)
-        return str(res_msg)
-        
-    elif len(para) >= 2:
+      
+    if len(para) >= 2:
 
         try:
             
@@ -51,10 +42,21 @@ def sms_reply():
             main_msg = MessagingResponse()
             main_msg.message(user_out)
             return str(main_msg)
+        
         except:
             err_msg = MessagingResponse()
             err_msg.message("Nothing Found :(\nTo imporve the search\n Input correct spelling\nTry different location or resource")
             return str(err_msg)
+        
+    elif msg.lower() == "resources" or "resource":
+
+        link = "https://api.covid.army/api/resources"
+        r = s.get(link)
+        res_output = json.loads(r.text)
+        gvn = '\n'.join(res_output)
+        res_msg = MessagingResponse()
+        res_msg.message(gvn)
+        return str(res_msg)
         
     else:
         intro = """Hello, Myself 'Covid Resource Bot'\n
