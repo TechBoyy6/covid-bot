@@ -40,8 +40,9 @@ def sms_reply():
 
             res_type = output[rnd_index]["resource_type"]
             res_num = output[rnd_index]["phone"]
+            fi_num = "".join(res_num)
             res_txt = output[rnd_index]["text"]
-            user_out = res_type+res_num+res_txt
+            user_out = res_type+"\n"+fi_num+"\n"+res_txt
             msg_resp = MessagingResponse()
             msg_resp.message(user_out)
             return str(msg_resp)
