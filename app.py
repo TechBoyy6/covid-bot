@@ -10,28 +10,33 @@ app = Flask(__name__)
 
 @app.route("/")
 def about():
-    return "This is a Whatsapp Bot that extracts the leads from the covid.army api and provide covid resources on whatsapp easily.\nThis initiative its taken by Moiz Rajkotwala\nOnline Portfolio -> moizrajkotwala.netlify.app\nGitHub -> https://github.com/TechBoyy6"
+    abt_msg = """This is a Whatsapp Bot that extracts the leads from the covid.army api and provide covid resources on whatsapp easily.\n
+    This initiative is taken by Moiz Rajkotwala\n
+    Online Portfolio -> http://moizrajkotwala.netlify.app \n
+    GitHub -> https://github.com/TechBoyy6"""
+    return abt_msg
 
 @app.route("/msg", methods=['POST'])
 def sms_reply():
 
     msg = request.form.get('Body')
+    para = msg.lower().split(" ")
     s = requests.Session()        
 
-    if msg.lower() == "resources":
+    if msg.lower() == "resources" or "resource":
 
         link = "https://api.covid.army/api/resources"
         r = s.get(link)
         res_output = json.loads(r.text)
         gvn = '\n'.join(res_output)
-        resp_er = MessagingResponse()
-        resp_er.message(gvn)
-        return str(resp_er)
+        res_msg = MessagingResponse()
+        res_msg.message(gvn)
+        return str(res_msg)
         
-    else:
+    elif len(para) >= 2:
 
         try:
-            para = msg.lower().split(" ")
+            
             url="https://api.covid.army/api/tweets/{}/{}".format(para[0], "".join(para[1:]))
 
             r = s.get(url)
@@ -43,13 +48,23 @@ def sms_reply():
             fi_num = "".join(res_num)
             res_txt = output[rnd_index]["text"]
             user_out = res_type+"\n"+fi_num+"\n"+res_txt
-            msg_resp = MessagingResponse()
-            msg_resp.message(user_out)
-            return str(msg_resp)
+            main_msg = MessagingResponse()
+            main_msg.message(user_out)
+            return str(main_msg)
         except:
-            err_resp = MessagingResponse()
-            err_resp.message("Nothing Found :(\nTo imporve the search\n Input correct spelling\nTry different location or resource")
-            return str(err_resp)
+            err_msg = MessagingResponse()
+            err_msg.message("Nothing Found :(\nTo imporve the search\n Input correct spelling\nTry different location or resource")
+            return str(err_msg)
+        
+    else:
+        intro = """Hello, Myself 'Covid Resource Bot'\n
+                    *Type 'resources' to know the list of resources you can search for.\n
+                    *Type 'Location<space>Resource' to get lead message.
+                    example -> mumbai oxygen"""
+        
+        intro_msg = MessagingResponse()
+        intro_msg.message(intro)
+        return str(intro_msg)
     
 
 
