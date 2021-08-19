@@ -60,8 +60,8 @@ def sms_reply():
 
     else:
         intro = """Hello, Myself 'Covid Resource Bot'\n
-* 1. To get the list of resources you can search for.\n
-* Type 'Your_Location<space>Resource_you_want' to get lead message.
+1. To get the list of resources you can search for.\n
+Msg 'Your_Location<space>Resource_you_want' to get lead message.
 example - mumbai oxygen"""
         
         intro_msg = MessagingResponse()
