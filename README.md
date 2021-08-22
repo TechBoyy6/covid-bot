@@ -10,6 +10,9 @@ pip install flask
 pip install twilio
 ```
 
+# How to use
+- Tutorial [video](https://moizrajkotwala.netlify.app/img/portfolio/covid_bot.mp4)
+
+
 # API used
 - [covid.army](https://api.covid.army/)
-
